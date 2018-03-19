@@ -68,7 +68,7 @@ private GoogleMap mMap;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        showMap();
+
     }
 
     protected synchronized void buildClient() {
