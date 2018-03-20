@@ -243,13 +243,13 @@ setMarkerListener(mMap);
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address>  addresses=null;
         try {
-           addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+           addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 5);
         } catch (IOException e) {
-            e.printStackTrace();
+           Log.d("exception", e.getMessage());
         }
+        Log.d("divyam",addresses.size()+"");
         citynam = addresses.get(0).getLocality();
         listparkingslots(citynam);
-        Log.d("tito",citynam);
     }
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public boolean checkLocationPermission(){
@@ -325,7 +325,6 @@ setMarkerListener(mMap);
                     ParkingSlots parkingSlots = dataSnapshot1.getValue(ParkingSlots.class);
                     parkingSlotsList.add(parkingSlots);
                 }
-                Log.d("size", parkingSlotsList.size() + "");
                 addparkingstomap(parkingSlotsList);
 //                adapter=new TollAdapter(MainActivity.this,tollList);
 //                recyclerView.setAdapter(adapter);
