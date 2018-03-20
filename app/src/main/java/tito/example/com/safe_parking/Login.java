@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import tito.example.com.safe_parking.Helper.Common;
+
 public class Login extends AppCompatActivity {
     private TextView textView;
     private EditText inputEmail, inputPassword;
@@ -48,7 +50,7 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = inputEmail.getText().toString();
+                final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
@@ -82,7 +84,9 @@ public class Login extends AppCompatActivity {
                                 } else {
                                     Intent intent = new Intent(Login.this, MainActivity.class);
                                     startActivity(intent);
+                                    Common.email=email;
                                     finish();
+
                                 }
                             }
                         });

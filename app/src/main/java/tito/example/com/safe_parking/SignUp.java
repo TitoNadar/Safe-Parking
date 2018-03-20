@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import tito.example.com.safe_parking.Helper.Common;
+
 public class SignUp extends AppCompatActivity {
 
     private EditText name,inputEmail, inputPassword;
@@ -36,7 +38,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString();
+                final String email = inputEmail.getText().toString();
                 String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
@@ -69,6 +71,7 @@ public class SignUp extends AppCompatActivity {
                                     Toast.makeText(SignUp.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    Common.email=email;
                                     startActivity(new Intent(SignUp.this, MainActivity.class));
                                     finish();
                                 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 
+import tito.example.com.safe_parking.Helper.Common;
+
 public class Details extends AppCompatActivity {
  CardView cardView1,cardView2;
     @Override
@@ -19,6 +21,7 @@ public class Details extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(Details.this,GenerateCode.class);
                 intent.putExtra("no",1);
+                intent.putExtra("user", Common.email);
                 startActivity(intent);
             }
         });
@@ -26,6 +29,7 @@ public class Details extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent=new Intent(Details.this,GenerateCode.class);
+            intent.putExtra("user",Common.email);
             intent.putExtra("no",2);
             startActivity(intent);
 
