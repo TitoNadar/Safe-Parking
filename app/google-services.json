@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "123645006744",
+    "firebase_url": "https://safeparking-98a3e.firebaseio.com",
+    "project_id": "safeparking-98a3e",
+    "storage_bucket": "safeparking-98a3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123645006744:android:e1e73c4e84b4fd40",
+        "android_client_info": {
+          "package_name": "tito.example.com.safe_parking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123645006744-k721046ko90ed5nbsua7mh7s8i6t0l6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tito.example.com.safe_parking",
+            "certificate_hash": "1cdd64251299fda9ccbea140a157c10c997fd32e"
+          }
+        },
+        {
+          "client_id": "123645006744-ggr5b5tdr099ttn0qvhlsdjj8bjub134.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZo3kNUxox4VjQwtIMd-xU2KBP9XoXnuo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123645006744-ggr5b5tdr099ttn0qvhlsdjj8bjub134.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -34,10 +34,18 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import tito.example.com.safe_parking.Model.ParkingSlots;
 
 public class MainActivity extends AppCompatActivity implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LocationListener {
     // Constants
@@ -45,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements  OnMapReadyCallba
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 111;
     private static final int PLACE_PICKER_REQUEST = 1;
 // Member variables
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 private GoogleMap mMap;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -52,6 +62,7 @@ private GoogleMap mMap;
     private boolean mIsEnabled;
     private GoogleApiClient mClient;
     String citynam;
+    List<ParkingSlots> parkingSlotsList=new ArrayList<>();
 //    private Geofencing mGeofencing;
 
     @Override
@@ -59,6 +70,8 @@ private GoogleMap mMap;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        firebaseDatabase=FirebaseDatabase.getInstance();
+        databaseReference=firebaseDatabase.getReference("City");
         buildClient();
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -198,6 +211,7 @@ if(mClient==null) {
             e.printStackTrace();
         }
         citynam = addresses.get(0).getLocality();
+        listparkingslots(citynam);
         Log.d("tito",citynam);
     }
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -265,6 +279,35 @@ if(mClient==null) {
             // You can add here other case statements according to your requirement.
         }
     }
+    private void listparkingslots(String citynam) {
+        Log.d("here", "HERE");
+        databaseReference.orderByChild("cityname").equalTo(citynam).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    ParkingSlots parkingSlots = dataSnapshot1.getValue(ParkingSlots.class);
+                    parkingSlotsList.add(parkingSlots);
+                }
+                Log.d("size", parkingSlotsList.size() + "");
+                addparkingstomap(parkingSlotsList);
+//                adapter=new TollAdapter(MainActivity.this,tollList);
+//                recyclerView.setAdapter(adapter);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void addparkingstomap(List<ParkingSlots> parkingSlotsList) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        for(int i=0;i<parkingSlotsList.size();i++) {
+            LatLng latLng=new LatLng(Double.parseDouble(parkingSlotsList.get(i).getLat()),Double.parseDouble(parkingSlotsList.get(i).getLng()));
+            markerOptions.position(latLng);
+            markerOptions.title(parkingSlotsList.get(i).getName());
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            mCurrLocationMarker = mMap.addMarker(markerOptions);
+        }
+    }
 }
-
