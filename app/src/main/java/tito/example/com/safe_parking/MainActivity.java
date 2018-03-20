@@ -312,8 +312,7 @@ setMarkerListener(mMap);
                 return;
             }
 
-            // other 'case' lines to check for other permissions this app might request.
-            // You can add here other case statements according to your requirement.
+
         }
     }
     private void listparkingslots(String citynam) {
@@ -326,8 +325,7 @@ setMarkerListener(mMap);
                     parkingSlotsList.add(parkingSlots);
                 }
                 addparkingstomap(parkingSlotsList);
-//                adapter=new TollAdapter(MainActivity.this,tollList);
-//                recyclerView.setAdapter(adapter);
+
             }
 
             @Override
