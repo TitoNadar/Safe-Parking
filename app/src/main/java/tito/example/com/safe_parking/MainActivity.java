@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import tito.example.com.safe_parking.Model.Individual;
 import tito.example.com.safe_parking.Model.ParkingSlots;
 
 public class MainActivity extends AppCompatActivity implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LocationListener {
@@ -63,6 +64,7 @@ private GoogleMap mMap;
     private GoogleApiClient mClient;
     String citynam;
     List<ParkingSlots> parkingSlotsList=new ArrayList<>();
+    List<Individual> individualList=new ArrayList<>();
 //    private Geofencing mGeofencing;
 
     @Override
@@ -81,10 +83,12 @@ private GoogleMap mMap;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-      setMarkerListener();
+
     }
 
-    private void setMarkerListener() {
+    private void setMarkerListener(GoogleMap map) {
+        mMap=map;
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -95,8 +99,14 @@ private GoogleMap mMap;
                     public void onDataChange(DataSnapshot dataSnapshot) {
                    for(DataSnapshot snapshot:dataSnapshot.getChildren())
                    {
+                          Individual individual=snapshot.getValue(Individual.class);
+                          if(individual.getStatus().equals("available"))
+                          {
+                              individualList.add(individual);
+                          }
 
                    }
+                   Log.d("sum",individualList.size()+"");
                     }
 
                     @Override
@@ -214,7 +224,7 @@ if(mClient==null) {
         if (mClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mClient, this);
         }
-
+setMarkerListener(mMap);
     }
     private void addMarker(LatLng latLng)
     {
@@ -231,9 +241,9 @@ if(mClient==null) {
     }
     private void checkCurrentCity(Location location, LatLng latLng) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses = null;
+        List<Address>  addresses=null;
         try {
-            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+           addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
