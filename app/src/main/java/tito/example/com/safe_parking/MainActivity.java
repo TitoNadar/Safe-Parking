@@ -72,6 +72,7 @@ private GoogleMap mMap;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference("City");
         buildClient();
@@ -121,14 +122,15 @@ private GoogleMap mMap;
     }
 
     protected synchronized void buildClient() {
-        mClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .addApi(Places.GEO_DATA_API)
-                .enableAutoManage(this, this)
-                .build();
-
+      if(mClient==null) {
+          mClient = new GoogleApiClient.Builder(this)
+                  .addConnectionCallbacks(this)
+                  .addOnConnectionFailedListener(this)
+                  .addApi(LocationServices.API)
+                  .addApi(Places.GEO_DATA_API)
+                  .enableAutoManage(this, this)
+                  .build();
+      }
     }
 
     private void showMap() {
