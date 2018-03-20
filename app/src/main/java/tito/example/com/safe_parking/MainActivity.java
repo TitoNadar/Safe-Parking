@@ -95,7 +95,7 @@ private GoogleMap mMap;
                     public void onDataChange(DataSnapshot dataSnapshot) {
                    for(DataSnapshot snapshot:dataSnapshot.getChildren())
                    {
-                       
+
                    }
                     }
 
