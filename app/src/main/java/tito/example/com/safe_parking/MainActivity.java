@@ -81,7 +81,33 @@ private GoogleMap mMap;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+      setMarkerListener();
+    }
 
+    private void setMarkerListener() {
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                FirebaseDatabase database=FirebaseDatabase.getInstance();
+                DatabaseReference reference=database.getReference("Individual");
+                reference.orderByChild("name").equalTo(marker.getTitle()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                   for(DataSnapshot snapshot:dataSnapshot.getChildren())
+                   {
+                       
+                   }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                })
+            ;
+                return true;
+            }
+        });
     }
 
     protected synchronized void buildClient() {
@@ -154,7 +180,7 @@ private GoogleMap mMap;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -182,6 +208,7 @@ if(mClient==null) {
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         addMarker(latLng);
+        Log.d("change",location.getLatitude()+"");
         checkCurrentCity(location,latLng);
         //stop location updates
         if (mClient != null) {
