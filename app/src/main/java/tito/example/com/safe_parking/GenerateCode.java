@@ -21,7 +21,7 @@ public class GenerateCode extends AppCompatActivity {
         VCard abhay=new VCard(Common.user)
                 .setEmail(Common.email)
                 .setAddress("India")
-                .setTitle("Demo")
+                .setTitle("Demo user"+Common.user)
                 .setCompany("Rajasthan Hackathon");
         Bitmap myBitmap= QRCode.from(abhay).bitmap();
         myImage.setImageBitmap(myBitmap);}
