@@ -6,4 +6,5 @@ package tito.example.com.safe_parking.Helper;
 
 public class Common {
     public static String email;
+    public static String user;
 }

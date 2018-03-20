@@ -72,6 +72,7 @@ public class SignUp extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     Common.email=email;
+                                    Common.user=name.getText().toString();
                                     startActivity(new Intent(SignUp.this, MainActivity.class));
                                     finish();
                                 }
